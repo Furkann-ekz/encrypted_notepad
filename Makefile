@@ -1,5 +1,5 @@
 SRCS	=	crpytogphy.c	\
-			functions.c		\
+		functions.c	\
 
 APP_C	=	application.c
 
