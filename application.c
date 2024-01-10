@@ -3,7 +3,7 @@
 int	ft_error(unsigned char *str, int secim)
 {
 	secim = 3;
-	do
+	while (secim != 0 && secim != 1 && secim != 2)
 	{
 		system("clear");
 		str = ft_str("Geçersiz giriş yaptınız. "
@@ -13,24 +13,24 @@ int	ft_error(unsigned char *str, int secim)
 				"Programı kapatmak için 0 girmeniz gerekmektedir: ");
 		write (1, str, ft_strlen(str));
 		free(str);
-		usleep(50);
+		usleep(100);
 		scanf (" %[^\n]", str);
-		usleep(50);
-		while (getchar() != '\n');
+		usleep(100);
+		while (getchar() != '\n')
+			;
 		if (!str[1])
 			secim = str[0] - 48;
-	} while (secim != 0 && secim != 1 && secim != 2);
+	}
 	return (secim);
 }
 
-void	ft_closer(unsigned char *str, int yazilacak_dosya, int okunacak_dosya, int pss)
+void	ft_closer(unsigned char *str)
 {
 	str = NULL;
 	str = ft_str("\nNotlarınız güvende, programdan çıkılıyor... "
 			"Sağlıklı kalın :)\n");
 	write (1, str, ft_strlen(str));
 	free(str);
-
 }
 
 void	close_files(int yazilacak_dosya, int okunacak_dosya, int pss)
@@ -54,9 +54,9 @@ int	ft_choose(unsigned char *str, int secim)
 			"Programı kapatmak için 0 girmeniz gerekmektedir: ");
 	write (1, str, ft_strlen(str));
 	free(str);
-	usleep(50);
+	usleep(20);
 	scanf (" %[^\n]", str);
-	usleep(50);
+	usleep(20);
 	while (getchar() != '\n');
 	if (!str[1])
 		secim = str[0] - 48;
@@ -70,36 +70,40 @@ int	ft_choose(unsigned char *str, int secim)
 }
 int	pss_creator(int pss, unsigned char *s, unsigned char *temp, unsigned char *str)
 {
-	while (1)
+	int	c;
+
+	c = 1;;
+	if (ft_strcmp(temp, str) == 0)
+	{
+		pss = open(".pss", O_CREAT | O_WRONLY, 777);
+		str = ft_encryption(str);
+		write (pss, str, ft_strlen(str));
+		close(pss);
+		temp = ft_str("Şifreniz oluşturuldu. Uygulamaya giriş yapılıyor...\n");
+		write (1, temp, ft_strlen(temp));
+		sleep(2);
+		system("clear");
+		c = 0;
+	}
+	while (c)
 	{
 		sleep(1);
 		system("clear");
 		s = ft_str("Girdiğiniz şifreler birbiriyle uyuşmuyor. Lütfen tekrar deneyiniz:");
 		write (1, s, ft_strlen(s));
 		free(s);
-		usleep(50);
+		usleep(20);
 		scanf (" %[^\n]", str);
-		usleep(50);
+		usleep(20);
 		temp = ft_str("Onaylamak için şifrenizi tekrar giriniz:");
 		write (1, temp, ft_strlen(temp));
 		free(temp);
-		usleep(50);
+		usleep(20);
 		scanf (" %[^\n]", temp);
-		usleep(50);
+		usleep(20);
 		if (ft_strcmp(temp, str) == 0)
-			break;
+			break ;
 	}
-	if (ft_strcmp(temp, str) == 0)
-		{
-			pss = open(".pss", O_CREAT | O_WRONLY, 777);
-			str = ft_encryption(str);
-			write (pss, str, ft_strlen(str));
-			close(pss);
-			temp = ft_str("Şifreniz oluşturuldu. Uygulamaya giriş yapılıyor...\n");
-			write (1, temp, ft_strlen(temp));
-			sleep(2);
-			system("clear");
-		}
 	return (0);
 }
 
@@ -136,83 +140,13 @@ int	pss_error(char *str, char *temp)
 				return (0);
 			}
 			printf("Hatalı şifre girdiniz!\n%d deneme hakkınız kaldı...\n", x);
-			usleep(50);
+			usleep(20);
 			scanf (" %[^\n]", temp);
-			usleep(50);
+			usleep(20);
 		}
 	}
 }
-/*
-if (ft_strcmp(str, temp) == 0)
-		{
-			free(str);
-			str = ft_str("Şifre doğru! Uygulama açılıyor...");
-			write (1, str, ft_strlen(str));
-			free(str);
-			sleep(1);
-			system("clear");
-		}
-		else
-		{
-			system("clear");
-			temp = NULL;
-			temp = ft_str("Hatalı şifre girdiniz!\n"
-					"2 deneme hakkınız kaldı...\n");
-			write (1, temp, ft_strlen(temp));
-			free(temp);
-			usleep(50);
-			scanf (" %[^\n]", temp);
-			usleep(50);
-			if (ft_strcmp(str, temp) == 0)
-			{
-				free(str);
-				str = ft_str("Şifre doğru! Uygulama açılıyor...");
-				write (1, str, ft_strlen(str));
-				free(str);
-				sleep(1);
-				system("clear");
-			}
-			else
-			{
-				system("clear");
-				temp = NULL;
-				temp = ft_str("Tekrar hatalı şifre girdiniz!\n"
-						"1 deneme hakkınız kaldı...\n");
-				write (1, temp, ft_strlen(temp));
-				free(temp);
-				usleep(50);
-				scanf (" %[^\n]", temp);
-				usleep(50);
-				if (ft_strcmp(str, temp) == 0)
-				{
-					free(str);
-					str = ft_str("Şifre doğru! Uygulama açılıyor...");
-					write (1, str, ft_strlen(str));
-					free(str);
-					sleep(1);
-					system("clear");
-				}
-				else
-				{
-					system("clear");
-					temp = NULL;
-					temp = ft_str("3. kez hatalı şifre girdiniz!\n"
-							"Program sonlandırılıyor...\n");
-					write (1, temp, ft_strlen(temp));
-					free(temp);
-					if (yazilacak_dosya == 3 || yazilacak_dosya == 4 || yazilacak_dosya == 5)
-						close(yazilacak_dosya);
-					if (okunacak_dosya == 3 || okunacak_dosya == 4 || okunacak_dosya == 5)
-						close(okunacak_dosya);
-					if (pss == 3 || pss == 4 || pss == 5)
-						close(pss);
-					sleep(1);
-					system("clear");
-					return (0);
-				}
-			}
-		}
-*/
+
 int	main(void)
 {
 	int				yazilacak_dosya;
@@ -234,15 +168,15 @@ int	main(void)
 				"Lütfen şifrenizi giriniz:");
 		write (1, str, ft_strlen(str));
 		free(str);
-		usleep(50);
+		usleep(20);
 		scanf (" %[^\n]", str);
-		usleep(50);
+		usleep(20);
 		temp = ft_str("Onaylamak için şifrenizi tekrar giriniz:");
 		write (1, temp, ft_strlen(temp));
 		free(temp);
-		usleep(50);
+		usleep(20);
 		scanf (" %[^\n]", temp);
-		usleep(50);
+		usleep(20);
 		pss_creator(pss, s, temp, str);
 	}
 	else
@@ -251,9 +185,9 @@ int	main(void)
 		temp = ft_str("Uygulamayı açmak için lütfen şifrenizi giriniz:");
 		write (1, temp, ft_strlen(temp));
 		free(temp);
-		usleep(50);
+		usleep(20);
 		scanf (" %[^\n]", temp);
-		usleep(50);
+		usleep(20);
 		str = NULL;
 		str = ft_get_read(pss, str);
 		str = ft_decryption(str);
@@ -275,8 +209,9 @@ int	main(void)
 		}
 		if (secim == 0)
 		{
-			ft_closer(str, yazilacak_dosya, okunacak_dosya, pss);
-			break;
+			ft_closer(str);
+			close_files(yazilacak_dosya, okunacak_dosya, pss);
+			break ;
 		}
 		else if (secim == 1)
 		{
@@ -289,17 +224,17 @@ int	main(void)
 					"dosya için bir isim girin: ");
 			write (1, str, ft_strlen(str));
 			free(str);
-			usleep(50);
+			usleep(20);
 			scanf (" %[^\n]", str);
-			usleep(50);
+			usleep(20);
 			yazilacak_dosya = open(str, O_CREAT | O_WRONLY, 333);
 			str = ft_str("Şimdi ise şifreli bir şekilde kaydedilmesini"
 					" istediğiniz notunuzu giriniz:\n");
 			write (1, str, ft_strlen(str));
 			free(str);
-			usleep(50);
+			usleep(20);
 			scanf (" %[^\n]", str);
-			usleep(50);
+			usleep(20);
 			str = ft_encryption(str);
 			write (yazilacak_dosya, str, ft_strlen(str));
 			usleep(50);
@@ -315,9 +250,9 @@ int	main(void)
 					", istemiyorsanız 'hayır' yazınız: ");
 			write (1, str, ft_strlen(str));
 			free (str);
-			usleep(50);
+			usleep(20);
 			scanf (" %[^\n]", str);
-			usleep(50);
+			usleep(20);
 			while (1)
 			{
 				if (ft_strcmp(str, "evet") == 0)
@@ -326,12 +261,13 @@ int	main(void)
 					str = NULL;
 					secim = ft_choose(str, secim);
 					str = NULL;
-					break;
+					break ;
 				}
 				else if (ft_strcmp(str, "hayır") == 0)
 				{
 					str = NULL;
-					ft_closer(str, yazilacak_dosya, okunacak_dosya, pss);
+					ft_closer(str);
+					close_files(yazilacak_dosya, okunacak_dosya, pss);
 					str = NULL;
 					return (0);
 				}
@@ -346,9 +282,9 @@ int	main(void)
 								", istemiyorsanız 'hayır' yazınız: ");
 						write (1, str, ft_strlen(str));
 						free(str);
-						usleep(50);
+						usleep(20);
 						scanf (" %[^\n]", str);
-						usleep(50);
+						usleep(20);
 					}
 				}
 			}
@@ -367,9 +303,9 @@ int	main(void)
 			str = ft_str("Lütfen okumak istediğiniz dosyanın adını giriniz: ");
 			write (1, str, ft_strlen(str));
 			free(str);
-			usleep(50);
+			usleep(20);
 			scanf (" %[^\n]", str);
-			usleep(50);
+			usleep(20);
 			while (1)
 			{
 				okunacak_dosya = open(str, O_RDONLY, 444);
@@ -381,21 +317,21 @@ int	main(void)
 							"Lütfen tekrar giriş yapınız: ");
 					write (1, str, ft_strlen(str));
 					free(str);
-					usleep(50);
+					usleep(20);
 					scanf (" %[^\n]", str);
-					usleep(50);
+					usleep(20);
 				}
 				else
-					break;
+					break ;
 			}
 			sleep(1);
 			temp = ft_str("Okuma işlemi tamamlandı. Şifreleme çözümlendi.\n"
 					"Metni yazdırmak için 'oku' yazınız: ");
 			write (1, temp, ft_strlen(temp));
 			free(temp);
-			usleep(50);
+			usleep(20);
 			scanf (" %[^\n]", temp);
-			usleep(50);
+			usleep(20);
 			while (1)
 			{
 				if (ft_strncmp(temp, "oku", 3) == 0)
@@ -411,21 +347,22 @@ int	main(void)
 							", istemiyorsanız 'hayır' yazınız: ");
 					write (1, str, ft_strlen(str));
 					free (str);
-					usleep(50);
+					usleep(20);
 					scanf (" %[^\n]", str);
-					usleep(50);
+					usleep(20);
 					while (1)
 					{
 						if (ft_strcmp(str, "evet") == 0)
 						{
 							secim = ft_choose(temp, secim);
 							temp = NULL;
-							break;
+							break ;
 						}
 						else if (ft_strcmp(str, "hayır") == 0)
 						{
 							str = NULL;
-							ft_closer(str, yazilacak_dosya, okunacak_dosya, pss);
+							ft_closer(str);
+							close_files(yazilacak_dosya, okunacak_dosya, pss);
 							str = NULL;
 							return (0);
 						}
@@ -440,9 +377,9 @@ int	main(void)
 										", istemiyorsanız 'hayır' yazınız: ");
 								write (1, str, ft_strlen(str));
 								free(str);
-								usleep(50);
+								usleep(20);
 								scanf (" %[^\n]", str);
-								usleep(50);
+								usleep(20);
 							}
 						}
 					}
@@ -456,24 +393,11 @@ int	main(void)
 					str = ft_str("Hatalı giriş yaptınız.\nLütfen notunuzu görüntülemek için 'oku' yazınız: ");
 					write (1, str, ft_strlen(str));
 					free(str);
-					usleep(50);
+					usleep(20);
 					scanf (" %[^\n]", temp);
-					usleep(50);
+					usleep(20);
 				}
 			}
 		}
 	}
 }
-
-/*
-str = ft_str("Lütfen yapmak istediğiniz işlemi seçin.\n"
-			"Notunuzu şifrelemek için 1'e,\nşifrelediğiniz bir "
-			"notu okumak için 2'ye,\nprogramı "
-			"kapatmak için 0'a basmanız gerekmektedir: ");
-	write (1, str, ft_strlen(str));
-	free(str);
-	scanf (" %[^\n]", str);
-	while (getchar() != '\n');
-	if (!str[1])
-		secim = str[0] - 48;
-*/
