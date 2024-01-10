@@ -123,8 +123,4 @@ unsigned char	ft_tcryptor(unsigned char c)
 	}
 	return (g_character);
 }
-
-
-
-
 */
