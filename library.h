@@ -22,7 +22,7 @@ int				ft_strncmp(unsigned char *s1, unsigned char *s2, int size);
 int				ft_error(unsigned char *str, int secim);
 int				ft_choose(unsigned char *str, int secim);
 int				pss_creator(int pss, unsigned char *s, unsigned char *temp, unsigned char *str);
-int				pss_error(char *str, char *temp);
+int				pss_error(unsigned char *str, unsigned char *temp);
 size_t			ft_strlen(unsigned char *str);
 
 #endif

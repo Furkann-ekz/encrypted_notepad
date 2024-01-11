@@ -107,7 +107,7 @@ int	pss_creator(int pss, unsigned char *s, unsigned char *temp, unsigned char *s
 	return (0);
 }
 
-int	pss_error(char *str, char *temp)
+int	pss_error(unsigned char *str, unsigned char *temp)
 {
 	int	c;
 	int	x;
