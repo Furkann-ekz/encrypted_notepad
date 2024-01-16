@@ -9,6 +9,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <signal.h>
 
 void			ft_closer(unsigned char *str);
 void			close_files(int yazilacak_dosya, int okunacak_dosya, int pss);
@@ -23,6 +24,7 @@ int				ft_error(unsigned char *str, int secim);
 int				ft_choose(unsigned char *str, int secim);
 int				pss_creator(int pss, unsigned char *s, unsigned char *temp, unsigned char *str);
 int				pss_error(unsigned char *str, unsigned char *temp);
+int				signal_handler(int sig);
 size_t			ft_strlen(unsigned char *str);
 
 #endif
