@@ -159,6 +159,7 @@ int	main(void)
 	unsigned char	*s;
 
 	system("clear");
+	printf("%d\n",getpid());
 	str = ft_str("Merhaba, şifreli not defteri uygualamamıza hoş geldiniz!\n");
 	write (1, str, ft_strlen(str));
 	free(str);
