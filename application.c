@@ -147,13 +147,6 @@ int	pss_error(unsigned char *str, unsigned char *temp)
 	}
 }
 
-int	signal_handler(int sig)
-{
-	if (sig == SIGINT || sig == SIGKILL)
-		return (1);
-	return (0);
-}
-
 int	main(void)
 {
 	int				yazilacak_dosya;
@@ -406,13 +399,5 @@ int	main(void)
 				}
 			}
 		}
-	}
-	c = (int)signal(SIGINT, signal_handler);
-	c = (int)signal(SIGKILL, signal_handler);
-	if (c == 1)
-	{
-		ft_closer(str);
-		close_files(yazilacak_dosya, okunacak_dosya, pss);
-		exit (0);
 	}
 }
