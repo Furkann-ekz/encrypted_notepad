@@ -111,6 +111,7 @@ int	pss_error(unsigned char *str, unsigned char *temp)
 {
 	int	c;
 	int	x;
+
 	x = 3;
 	c = 1;
 	while (c)
@@ -192,7 +193,7 @@ int	main(void)
 		str = ft_get_read(pss, str);
 		str = ft_decryption(str);
 		c = pss_error(str, temp);
-		if (c == 0)
+		if (c != 0)
 		{
 			close_files(yazilacak_dosya, okunacak_dosya, pss);
 			exit(1);
