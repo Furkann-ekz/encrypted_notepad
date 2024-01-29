@@ -12,6 +12,7 @@
 # include <signal.h>
 
 void			ft_closer(unsigned char *str);
+void			signal_handler(int sig);
 void			close_files(int yazilacak_dosya, int okunacak_dosya, int pss);
 unsigned char	*ft_encryption(unsigned char *str);
 unsigned char	*ft_decryption(unsigned char *str);
