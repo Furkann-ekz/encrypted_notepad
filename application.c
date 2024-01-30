@@ -125,6 +125,7 @@ int	pss_error(unsigned char *str, unsigned char *temp)
 			sleep(1);
 			system("clear");
 			c = 0;
+			return (1);
 		}
 		else
 		{
