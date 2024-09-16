@@ -9,12 +9,9 @@ CFLAGS	=	-Wall -Wextra -Werror
 MFLAGS	=	-g -L./mlx -lmlx -framework AppKit -framework OpenGL
 RM		=	rm -rf
 NAME	=	encrypted_notepad
-MINI	=	./mlx/libmlx.a
 
 all: $(NAME)
 
-# $(MINI):
-# 	@make -C ./mlx &> /dev/null
 
 $(NAME): $(OBJS)
 	@gcc $(CFLAGS) $(OBJS) -o $(NAME)
@@ -26,12 +23,10 @@ $(NAME): $(OBJS)
 clean:
 	@rm -rf $(OBJS)
 	@rm -rf $(BOBJS)
-	@make clean -C mlx/
 
 fclean: clean
 	@rm -rf ${NAME}
 	@rm -rf $(B_NAME)
-	@make clean -C mlx/
 
 re: fclean all
 

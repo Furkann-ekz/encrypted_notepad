@@ -256,7 +256,9 @@ void	want_read(t_list *list)
 			list->str = ft_get_read(list->r_file, list->str);
 			list->str = ft_decryption(list->str);
 			close (list->r_file);
+			system("clear");
 			printf("%s\n", list->str);
+			sleep(10);
 			break ;
 		}
 		else

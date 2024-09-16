@@ -17,7 +17,7 @@ unsigned char	*ft_encryption(unsigned char *str)
 			str[i] -= 5;
 		else if (str[i] >= 184 && str[i] < 222)
 			str[i] += 17;
-		else if (str[i] >= 222 && str[i] <= 255)
+		else if (str[i] >= 222 && str[i] < 255)
 			str[i] -= 3;
 		i++;
 	}
